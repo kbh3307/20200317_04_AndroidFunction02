@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import kr.co.tjoeun.a20200317_04_androidfunction02.databinding.ActivityMainBinding;
@@ -30,8 +31,29 @@ public class MainActivity extends AppCompatActivity {
 
 //                응용문제 : EditText에 입력한 폰번으로 전화 걸도록
 
-                Uri uri = Uri.parse("tel:01051123237");
+//                1) 전화번호가 뭐라고 입력되었는지 받아오자
+
+                String phoneNum = binding.phoneNumEdt.getText().toString();
+//                Log.d("입력한폰번", phoneNum); //변수 값 확인용
+
+//                2) 받아온 전화번호로 호출
+//                => Uri.parse()에 들어갈 값을 가공
+//                => tel:전화번호
+                String phoneUriStr = String.format("tel:%s", phoneNum);
+                Uri uri = Uri.parse(phoneUriStr);
                 Intent intent = new Intent(Intent.ACTION_DIAL, uri);
+                startActivity(intent);
+            }
+        });
+
+        binding.callBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                현재까지 배운 것만으론 실행 불가 : 권한 획득 X
+
+                Uri uri = Uri.parse("tel:01051123237");
+                Intent intent = new Intent(Intent.ACTION_CALL, uri);
                 startActivity(intent);
             }
         });
